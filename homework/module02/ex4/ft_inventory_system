@@ -1,0 +1,82 @@
+import sys
+
+print("=== Inventory System Analysis ===")
+
+if len(sys.argv) == 1:
+    print("Usage: python3 ft_inventory_system.py item:quantity ...")
+else:
+    inventory = {}
+
+    i = 1
+    while i < len(sys.argv):
+        try:
+            parts = sys.argv[i].split(":")
+            name = parts[0]
+            qty = int(parts[1])
+
+            if name in inventory:
+                inventory[name] += qty
+            else:
+                inventory[name] = qty
+
+        except:
+            pass
+        i += 1
+
+    total_items = sum(inventory.values())
+    unique_items = len(inventory)
+
+    print(f"Total items in inventory: {total_items}")
+    print(f"Unique item types: {unique_items}\n")
+
+    print("=== Current Inventory ===")
+
+
+    for item in inventory:
+        qty = inventory[item]
+        percent = (qty / total_items) * 100
+        unit = "unit" if qty == 1 else "units"
+        print(f"{item}: {qty} {unit} ({round(percent, 1)}%)")
+
+    print("\n=== Inventory Statistics ===")
+
+    most = max(inventory, key=inventory.get)
+    least = min(inventory, key=inventory.get)
+
+    print(f"Most abundant: {most} ({inventory[most]} units)")
+    print(f"Least abundant: {least} ({inventory[least]} units)\n")
+
+    print("=== Item Categories ===")
+
+    moderate = {}
+    scarce = {}
+
+    for item in inventory:
+        qty = inventory[item]
+        if qty >= 5:
+            moderate[item] = qty
+        else:
+            scarce[item] = qty
+
+    print(f"Moderate: {moderate}")
+    print(f"Scarce: {scarce}\n")
+
+    print("=== Management Suggestions ===")
+
+    restock = []
+
+    for item in inventory:
+        if inventory[item] <= 1:
+            restock.append(item)
+
+    if len(restock) > 0:
+        print(f"Restock needed: {', '.join(restock)}")
+    else:
+        print("No restock needed")
+
+    print("\n=== Dictionary Properties Demo ===")
+
+    print(f"Dictionary keys: {', '.join(inventory.keys())}")
+    print(f"Dictionary values: {', '.join(str(v) for v in inventory.values())}")
+
+    print(f"Sample lookup - 'sword' in inventory: {'sword' in inventory}")
