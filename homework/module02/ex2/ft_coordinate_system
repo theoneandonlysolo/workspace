@@ -1,0 +1,53 @@
+import sys
+import math
+
+print("=== Game Coordinate System ===")
+print()
+
+if len(sys.argv) != 4:
+    print("Usage: python3 ft_coordinate_system.py x y z")
+else:
+    try:
+        point1 = (0, 0, 0)
+        point2 = (float(sys.argv[1]), float(sys.argv[2]), float(sys.argv[3]))
+
+        print(f"Position created: {point2}")
+
+        x1, y1, z1 = point1
+        x2, y2, z2 = point2
+
+        distance = math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2 + (z2 - z1) ** 2)
+        print(f"Distance between {point1} and {point2}: {round(distance, 2)}")
+        print()
+
+        coord_string = f"{sys.argv[1]},{sys.argv[2]},{sys.argv[3]}"
+        print(f'Parsing coordinates: "{coord_string}"')
+
+        parts = coord_string.split(",")
+        parsed_point = (int(parts[0]), int(parts[1]), int(parts[2]))
+        print(f"Parsed position: {parsed_point}")
+
+        x2, y2, z2 = parsed_point
+        distance = math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2 + (z2 - z1) ** 2)
+        print(f"Distance between {point1} and {parsed_point}: {distance}")
+        print()
+
+        bad_coord_string = "abc,def,ghi"
+        print(f'Parsing invalid coordinates: "{bad_coord_string}"')
+
+        try:
+            parts = bad_coord_string.split(",")
+            bad_point = (int(parts[0]), int(parts[1]), int(parts[2]))
+            print(f"Parsed position: {bad_point}")
+        except ValueError as e:
+            print(f"Error parsing coordinates: {e}")
+            print(f"Error details - Type: {type(e).__name__}, Args: {e.args}")
+        print()
+
+        print("Unpacking demonstration:")
+        x, y, z = parsed_point
+        print(f"Player at x={x}, y={y}, z={z}")
+        print(f"Coordinates: X={x}, Y={y}, Z={z}")
+
+    except ValueError as e:
+        print(f"Error parsing coordinates: {e}")
